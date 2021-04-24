@@ -15,7 +15,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
   // エントリーポイント(メインのjsファイル)
-  entry: './js/app.js',
+  entry: './js/index.js',
   // ファイルの出力設定
   output: {
     // 出力先(絶対パスでの指定必須)
@@ -29,10 +29,10 @@ module.exports = {
   // ローダーの設定
   module: {
     rules: [
-      // {
-      //   test: /\.css$/,
-      //   use: ["vue-style-loader", "css-loader"]
-      // },
+      {
+        test: /\.css$/,
+        use: ["vue-style-loader", "css-loader"]
+      },
       {
         test: /\.vue$/,
         loader: "vue-loader"

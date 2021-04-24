@@ -1,11 +1,14 @@
 <template>
-  <div>
+  <div id="container">
+    <h1>チュートリアルToDoリスト</h1>
+
     <label v-for="option in options">
       <input type="radio"
              v-model="currentOption"
              :value="option.value">{{ option.label }}
     </label>
-    <div>{{ computedTodos.length }}件を表示中</div>
+
+    ({{ computedTodos.length }}件を表示中)
 
     <table>
       <thead>
@@ -17,18 +20,19 @@
       </tr>
       </thead>
       <tbody>
-        <tr v-for="todo in computedTodos" :key="todo.id">
-          <td>{{ todo.id }}</td>
-          <td>{{ todo.comment }}</td>
-          <td class="state">
-            <button @click="doChange(todo)">{{ todo.state }}</button>
-          </td>
-          <td class="button">
-            <button @click="doRemove(todo)">削除</button>
-          </td>
-        </tr>
+      <tr v-for="todo in computedTodos" :key="todo.id">
+        <td>{{ todo.id }}</td>
+        <td>{{ todo.comment }}</td>
+        <td class="state">
+          <button @click="doChange(todo)">{{ labels[todo.state] }}</button>
+        </td>
+        <td class="button">
+          <button @click="doRemove(todo)">削除</button>
+        </td>
+      </tr>
       </tbody>
     </table>
+    <p>※削除ボタンはコントロールキーを押しながらクリックして下さい</p>
 
     <h2>新しい作業の追加</h2>
     <form class="add-form" @submit.prevent="doAdd">
@@ -65,12 +69,12 @@
         this.todos.push({
           id: TodoStorage.uid++,
           comment: comment.value,
-          state: 0
+          state: 1
         })
         comment.value = ''
       },
       doChange(item) {
-        item.state = item.state ? 0 : 1
+        item.state = item.state === 1 ? 2 : 1
       },
       doRemove(item) {
         const index = this.todos.indexOf(item)
@@ -96,6 +100,11 @@
             return el.state === 1
           }
         }, this)
+      },
+      labels() {
+        return this.options.reduce(function (a, b) {
+          return Object.assign(a, { [b.value]: b.label }, {})
+        })
       }
     }
   }
