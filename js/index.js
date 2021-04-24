@@ -6,7 +6,7 @@ require('./styles/main.css')
 
 new Vue({
   el: "#app",
-  store,
+  store, // ルートState
   components: {
     'App': App
   },
