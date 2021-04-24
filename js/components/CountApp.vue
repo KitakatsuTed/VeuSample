@@ -1,36 +1,36 @@
 <template>
   <div>
     <div>
-      {{ counterNum }}
+      {{ counter.count1 }}
       <button @click="countUp">カウントアップ</button>
     </div>
     <div>
-      {{ countNum2 }}
-      <button @click="numUp">ナンバーアップ</button>
+      <button @click="countUpAsync">非同期カウント</button>
+    </div>
+    <div>
     </div>
   </div>
 </template>
 
 <script>
-  import counter from "../store/counter";
-  import counter2 from "../store/counter2";
+  import { mapState } from "vuex"
+  import { mapActions } from "vuex"
 
   export default {
     methods: {
+      ...mapActions('counter', [
+        'increment',
+        'incrementAsync'
+      ]),
       countUp() {
-        counter.commit('increment')
+        this.increment()
       },
-      numUp() {
-        counter2.commit('increment')
+      countUpAsync() {
+        this.incrementAsync()
       }
     },
     computed: {
-      counterNum() {
-        return counter.state.count
-      },
-      countNum2() {
-        return counter2.state.count
-      }
+      ...mapState(["counter"])
     }
   }
 </script>

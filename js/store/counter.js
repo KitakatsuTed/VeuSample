@@ -1,19 +1,25 @@
-import Vuex from 'vuex';
-import Vue from "vue";
-
-Vue.use(Vuex)
-
-const counter = new Vuex.Store(
-  {
-    state: {
-      count: 0
-    },
-    mutations: {
-      increment(state) {
-        state.count ++
-      }
+// ローカルステート
+export default {
+  namespaced: true,
+  state: {
+    count1: 0
+  },
+  mutations: {
+    increment(state) {
+      state.count1 ++
     }
+  },
+  actions: {
+    increment({commit}) {
+      commit('increment')
+    },
+    incrementAsync({commit}) {
+      setTimeout(() => {
+        commit('increment')
+      }, 1000)
+    }
+  },
+  getters: {
+    addHundred: state => state.count1 + 100
   }
-)
-
-export default counter
+}
